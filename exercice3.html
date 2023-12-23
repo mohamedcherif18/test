@@ -1,0 +1,177 @@
+<html>
+<header>
+
+</header>
+<body onload="RemplirTable()" id="bd">
+
+
+
+<div style="background-image: url('https://cdn.dribbble.com/userupload/7142586/file/original-828a4945f01a0e4fb8ac0f9bf68e202a.jpg?resize=1024x768'); width:80%;height:100%">
+
+</div>
+<div style="width: 20%;height: 100%;position: relative;left: 70%;top:-60%" id="content">
+    <h3 style="margin-left: 18%;">Login</h3>
+<input type="text" placeholder="User ..." id="user">
+<input type="password" placeholder="Password ..." id="pass">
+<br>
+<button onclick="connecter()">Me connecte</button>
+<button onclick="navtoUpdate()">changer info</button>
+<br>
+<button>Quitter</button>
+</div>
+
+    <!--<input placeholder="user" id="user">
+    <input placeholder="Pass" id="pass">
+    <button>connexion</button><button>Quitter</button>-->
+
+
+</body>
+<script>
+    var old;
+    logins=[];
+    //Créez une page web comportant un tableau "logins" contenant 10 éléments.Ajoutez une fonction JavaScript"RemplirTable()"qui remplit le tableau "logins" avec des chaînes de caractères "Useri,PasseWordi"(iétantl'indicedutableau).Cette fonction doit être appelée lors du chargemen
+    function RemplirTable()
+    {
+        //var lst=[];
+   
+        for(i=1;i<=10;i++)
+        {
+            var login={"user":"User","password":"Password"}
+            login.user=login.user+i;
+            login.password=login.password+i;
+            logins.push(login);
+        }
+        console.log(logins)
+       
+    
+        
+    }
+
+
+
+//User1 Password1
+    
+
+    //Encliquant sur le bouton "Quitter" , demandez confirmation à l'utilisateur avant de fermer la fenêtre de connexion courante.
+
+  
+
+    
+
+//Écrivez   une fonction    "verifierLogin(...)"    qui vérifie la  validité    d'unlogin.Lelogin   ne  doit    pas être    vide    ,ne doit    pas contenir    d'espaces   ni  devirgules,et   sa  longueur    doit    être    comprise    entre   5   et  20  caractères.Elle retourne    "true"  si  le  login   est valide,sinon    elle    retourne    "false".
+function verifierLogin(login)
+{
+    //alert(login)
+
+    if((login=="")||(login.length<5)||(login.length>20)||(verifecontenu(login)==false))
+    {
+        alert("login")
+        return false;
+    }
+    return true;
+}
+
+//Écrivez   une fonction    "verifierMotPass(...)"  similaire   à   la  précédente,mais pour    vérifier    que le  champ   du  mot de  passe   n'est   pas vide    et  a   une longueur    comprise entre 8 et 25 caractères.
+function verifierMotPass(pass)
+{
+
+  if(pass==""|| (pass.length<8) || pass.length>25||(verifecontenu(pass))==false) 
+    {
+        
+        return false;
+    }
+    return true;
+}
+
+/*Écrivezunefonction"chercheUser(...)"quiprendunloginetunmotdepasseenparamètres,vérifieleurexistence(ignorantlesmajusculesetles
+minuscules)dansletableaudeslogins,etretourneleurindicedansletableaus'ilsexistent,sinonretourne-1*/
+function chercheUser(user,mdp)
+{bol=-1;
+    //alert(user.toUpperCase())
+    logins.map((x,index,array)=>{
+        if(((x.user).toUpperCase()==(user.toUpperCase())) && (((x.password).toUpperCase())==(mdp.toUpperCase())))
+        {
+            bol=index;
+        }
+    })
+    return bol;
+}
+
+
+
+function verifecontenu(ch)
+{
+    bol=true;
+   
+    for(var i=0;i<ch.length;i++)
+    {
+        if(ch.charAt(i)==','||ch.charAt(i)==' ')
+        {
+           
+            bol=false;
+        }
+    }
+        return true;
+}
+function navtoUpdate()
+{
+     old=document.getElementById("content").innerHTML;
+    document.getElementById("content").innerHTML="<div style='shadow-box:1px 1px 0.5;height:80%''><h3 style='margin-left: 18%;'>update</h3><input type='text' placeholder='Old User ...' id='olduser'><br><input type='text' placeholder='New User ...' id='newuser'><br><input type='password' placeholder='Old Password ...'' id='oldpass'><br><input type='password' placeholder='New Password ...' id='pass'><br><button onClick=modifyUser()>Confirmer</button><button onClick=Retour()>Retour</button></div>"
+}
+function Retour()
+{
+    document.getElementById("content").innerHTML=old;
+}
+
+//Écrivezunefonction"modifyUser()"permettant    à   un  utilisateur de  modifier    son login   et  son mot de  passe   existants   dans    le  tableau .Elle   utilise la  fonction    "chercheUser    (...)"pour  vérifier    quel'utilisateur    possède déjà    un  login   et  un  mot de  passe   enregistrés.Elle    demande un  nouveau login   et  mot de  passe   valides(enutilisantlesfonctions"verifierLogin()"et"verifierMotPass()")etenregistrecesnouvellesdonnéesdansletableaudesloginsaprèsconfirmationdel'utilisateur.
+function modifyUser(user,mdp)
+{
+    
+
+    //get data ...
+    var olduser=document.getElementById("olduser").value;
+    var oldpass=document.getElementById("oldpass").value;
+    var newuser=document.getElementById("newuser").value;
+    var newpass=document.getElementById("pass").value;
+ //alert("update")
+ 
+  //  alert(newpass)
+ 
+    var index=chercheUser(olduser,oldpass)
+    alert(index)
+    if(index!=-1)
+    {
+        if(verifierMotPass(newpass)==false||verifierLogin(newuser)==false)
+        {
+            alert("Verfier votre donnees");
+        }
+        else{
+            (logins[index]).user=newuser;
+            (logins[index]).password=newpass;
+        }
+
+
+    }
+    else{
+        alert("user not Found ...")
+    }
+
+}
+
+
+function connecter()
+{
+  var pnt=document.getElementById("user");
+  var user=pnt.value
+  pnt=document.getElementById("pass");
+  var pass=pnt.value;
+  if(chercheUser(user,pass)==-1)
+  {
+    alert("Verfiez votre donnees");
+  }
+  else{
+   document.getElementById('bd').innerHTML="<h1>Welcome To Application </h1>"
+  }
+}
+</script>
+</html>
